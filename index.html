@@ -1,65 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simplex Stays Ltd</title>
+  <meta name="description" content="Modern, corporate-ready furnished accommodation in London for short, medium and extended stays." />
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f8fafc; color: #111; }
-    .container { max-width: 1100px; margin: auto; padding: 40px 20px; }
-    h1 { font-size: 42px; margin-bottom: 10px; }
-    h2 { margin-top: 40px; }
-    .card { background: white; padding: 20px; border-radius: 12px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-    .btn { display: inline-block; padding: 12px 20px; background: black; color: white; border-radius: 8px; text-decoration: none; margin-top: 15px; }
-    .grid { display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); }
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-soft: #f1f5f9;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+      --dark: #0f172a;
+      --dark-2: #111827;
+      --shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
+      --radius: 24px;
+      --radius-lg: 32px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 88px 0 72px;
+      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 58%, #eef2f7 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-grid,
+    .split-grid,
+    .contact-grid,
+    .triple-grid,
+    .footer-grid {
+      display: grid;
+      gap: 28px;
+    }
+
+    .hero-grid,
+    .split-grid,
+    .contact-grid { grid-template-columns: 1.08fr 0.92fr; }
+    .triple-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .footer-grid { grid-template-columns: 1fr auto; align-items: center; }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.9);
+      box-shadow: var(--shadow-soft);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      font-size: clamp(42px, 6vw, 68px);
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    .lead {
+      font-size: 19px;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      margin-bottom: 14px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 28px 0 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: 0.2s ease;
+      border: 1px solid var(--border);
+    }
+
+    .btn-primary {
+      background: var(--dark);
+      color: white;
+      border-color: var(--dark);
+    }
+
+    .btn-primary:hover { opacity: 0.92; }
+    .btn-secondary:hover { background: #f8fafc; }
+
+    .feature-grid,
+    .highlights-grid,
+    .audience-grid,
+    .mini-grid,
+    .gallery-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .highlights-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .audience-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .mini-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .gallery-grid { grid-template-columns: 1.2fr 0.8fr; align-items: stretch; }
+
+    .section { padding: 84px 0; }
+    .section-soft {
+      background: #f9fafb;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card-xl {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .mock-visual {
+      min-height: 430px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #dfe7ef 0%, #eef3f8 100%);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mock-inner {
+      height: 100%;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(255,255,255,0.9);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(5px);
+    }
+
+    .mock-panel {
+      border-radius: 18px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid var(--border);
+      padding: 14px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .photo-card {
+      min-height: 260px;
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+      display: flex;
+      align-items: end;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.15) 100%);
+    }
+
+    .photo-caption {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.95);
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-soft);
+      width: fit-content;
+    }
+
+    .photo-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .bullet-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .host-band {
+      background: var(--dark);
+      color: white;
+    }
+
+    .host-band .lead,
+    .host-band .label { color: #cbd5e1; }
+
+    .glass {
+      border-radius: 28px;
+      padding: 28px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    .contact-shell {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 34px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stat {
+      font-size: 14px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+      padding: 14px;
+    }
+
+    footer {
+      padding: 24px 0 34px;
+      border-top: 1px solid var(--border);
+      background: white;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid,
+      .split-grid,
+      .contact-grid,
+      .gallery-grid,
+      .triple-grid,
+      .footer-grid { grid-template-columns: 1fr; }
+      .highlights-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .audience-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .hero, .section { padding: 64px 0; }
+      .feature-grid,
+      .highlights-grid,
+      .audience-grid,
+      .mini-grid,
+      .gallery-grid,
+      .triple-grid { grid-template-columns: 1fr; }
+      .card,
+      .card-xl,
+      .contact-shell,
+      .glass { border-radius: 22px; }
+      .mock-visual,
+      .photo-card { min-height: 220px; }
+      .cta-row { flex-direction: column; }
+      .btn { text-align: center; }
+    }
   </style>
 </head>
 <body>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Simplex Stays Ltd • Modern serviced accommodation in London</div>
+        <h1>Luxury-standard comfort for short, medium and extended London stays</h1>
+        <p class="lead">Simplex Stays provides clean, modern and corporate-ready furnished accommodation designed for comfort, privacy and practical everyday living. Ideal for company lets, relocation stays, contractors, professional groups and families.</p>
 
-<div class="container">
-  <h1>Simplex Stays Ltd</h1>
-  <p>Modern, corporate-ready accommodation in London for short and extended stays.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#property">View Property</a>
+          <a class="btn btn-secondary" href="#contact">Enquire Now</a>
+        </div>
 
-  <div class="card">
-    <h2>Featured Property</h2>
-    <p><strong>Location:</strong> Dollis Hill, North West London</p>
-    <p>3 Bedrooms • 2 Bathrooms • Lift Access • Long Stays Welcome</p>
-  </div>
+        <div class="feature-grid">
+          <div class="card">Fully furnished, corporate-ready accommodation</div>
+          <div class="card">Ideal for relocation, contractor and family stays</div>
+          <div class="card">Modern comfort with privacy-focused layouts</div>
+          <div class="card">Longer stays welcome across London properties</div>
+        </div>
+      </div>
 
-  <div class="card">
-    <h2>Why Choose Us</h2>
-    <div class="grid">
-      <div>Fully furnished, corporate-ready accommodation</div>
-      <div>Ideal for relocation, contractor and family stays</div>
-      <div>Modern comfort with privacy-focused layouts</div>
-      <div>Longer stays welcome across London properties</div>
+      <div>
+        <div class="card-xl">
+          <div class="mock-visual">
+            <div class="mock-inner">
+              <div>
+                <div class="label" style="margin-bottom:8px;">Featured Property</div>
+                <h3 style="margin-bottom:8px;">Featured 3-Bedroom Apartment</h3>
+                <p style="color:#475569; margin-bottom:0;">Dollis Hill, North West London</p>
+              </div>
+
+              <div class="mini-grid">
+                <div class="mock-panel">3 Bedrooms</div>
+                <div class="mock-panel">2 Bathrooms</div>
+                <div class="mock-panel">Lift Access</div>
+                <div class="mock-panel">Long Stays Welcome</div>
+              </div>
+            </div>
+          </div>
+          <p style="color:#475569; margin:18px 0 0;">A modern 7th-floor apartment in a new-build development, designed to combine comfort, privacy and practical luxury for professional and family stays.</p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="card">
-    <h2>Property Highlights</h2>
-    <div class="grid">
-      <div>Heated flooring</div>
-      <div>Air conditioning</div>
-      <div>TVs in every bedroom</div>
-      <div>Lockable bedrooms</div>
-      <div>Filtered water tap</div>
-      <div>Integrated bathroom audio</div>
+  <section class="section" id="about">
+    <div class="container split-grid">
+      <div>
+        <div class="label">About Simplex Stays</div>
+        <h2>A dependable stay experience built around comfort, trust and quality</h2>
+        <p class="lead">Simplex Stays Ltd was created to provide high-standard accommodation that feels both polished and practical. The focus is on spaces that are clean, well-prepared and genuinely comfortable to live in — whether a guest is staying for work, relocation, family travel or a longer visit to London.</p>
+        <p class="lead" style="font-size:18px;">Every stay is shaped around modern convenience, privacy and clear communication, helping guests feel settled from arrival to departure.</p>
+      </div>
+
+      <div class="card" style="background:#f8fafc; padding:30px;">
+        <div class="label">Why guests choose us</div>
+        <div style="display:grid; gap:14px; margin-top:18px;">
+          <div class="card">Professionally presented accommodation</div>
+          <div class="card">Designed for both short and extended stays</div>
+          <div class="card">Suitable for corporate, contractor and family bookings</div>
+          <div class="card">Thoughtful amenities that support everyday living</div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="card">
-    <h2>About Us</h2>
-    <p>Simplex Stays provides high-standard accommodation designed for comfort, privacy and practical living. Ideal for business and longer stays in London.</p>
-  </div>
+  <section class="section section-soft" id="property">
+    <div class="container">
+      <div style="max-width:800px; margin-bottom:28px;">
+        <div class="label">Featured Property</div>
+        <h2>Modern 3-bedroom apartment in Dollis Hill</h2>
+        <p class="lead">Located in Dollis Hill, this fully furnished apartment offers a rare combination of space, flexibility and premium comfort in North West London. Ideal for company lets, relocation stays, contractors, professional groups and families.</p>
+      </div>
 
-  <div class="card">
-    <h2>Enquiries</h2>
-    <p>Get in touch for corporate, relocation, contractor or family stays.</p>
-    <a href="mailto:hello@simplexstays.co.uk" class="btn">Email Enquiry</a>
-  </div>
+      <div class="gallery-grid" style="margin-bottom:24px;">
+        <div class="photo-card">
+          <div class="photo-caption">
+            <strong>Bright, practical and modern</strong><br />
+            Designed for comfort, privacy and longer stays.
+          </div>
+        </div>
+        <div class="photo-stack">
+          <div class="photo-card" style="min-height:122px;">
+            <div class="photo-caption"><strong>Corporate-ready layout</strong></div>
+          </div>
+          <div class="photo-card" style="min-height:122px;">
+            <div class="photo-caption"><strong>Comfort-focused details</strong></div>
+          </div>
+        </div>
+      </div>
 
-</div>
+      <div class="highlights-grid" style="margin-bottom:30px;">
+        <div class="card">3 bedrooms</div>
+        <div class="card">2 bathrooms</div>
+        <div class="card">7th floor with lift access</div>
+        <div class="card">Heated flooring</div>
+        <div class="card">Air conditioning</div>
+        <div class="card">TVs in every bedroom</div>
+        <div class="card">Lockable bedroom doors</div>
+        <div class="card">Filtered boiling & chilled water tap</div>
+        <div class="card">Integrated bathroom audio systems</div>
+        <div class="card">Corporate, family & group friendly</div>
+      </div>
 
+      <div class="triple-grid">
+        <div class="card" style="padding:30px;">
+          <h3>Sleeping Layout</h3>
+          <ul class="bullet-list">
+            <li>Master bedroom with double bed and en-suite</li>
+            <li>Second bedroom with double bed</li>
+            <li>Third bedroom with single bed</li>
+            <li>Two sofa beds in the living room</li>
+          </ul>
+        </div>
+        <div class="card" style="padding:30px;">
+          <h3>Kitchen & Living</h3>
+          <ul class="bullet-list">
+            <li>Fully equipped kitchen with oven, microwave and fridge freezer</li>
+            <li>Washer-dryer for everyday convenience</li>
+            <li>Filtered boiling and chilled water tap</li>
+            <li>Bright, practical living space for longer stays</li>
+          </ul>
+        </div>
+        <div class="card" style="padding:30px;">
+          <h3>Location Benefits</h3>
+          <ul class="bullet-list">
+            <li>Short walk to Dollis Hill and Neasden stations</li>
+            <li>Easy access to Central London via the Jubilee Line</li>
+            <li>Good road access via the A406 and A5</li>
+            <li>Calmer residential setting with local amenities nearby</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="stays">
+    <div class="container">
+      <div style="max-width:760px; margin-bottom:28px;">
+        <div class="label">Who we host</div>
+        <h2>Accommodation designed for different stay types</h2>
+      </div>
+
+      <div class="audience-grid">
+        <div class="card" style="padding:28px;">
+          <h3>Corporate Stays</h3>
+          <p style="color:#475569; margin-bottom:0;">Comfortable, well-presented accommodation for professionals, project teams and business travel in London.</p>
+        </div>
+        <div class="card" style="padding:28px;">
+          <h3>Relocation Bookings</h3>
+          <p style="color:#475569; margin-bottom:0;">A practical and welcoming base for guests moving to London who need flexibility, comfort and reliability.</p>
+        </div>
+        <div class="card" style="padding:28px;">
+          <h3>Contractor Accommodation</h3>
+          <p style="color:#475569; margin-bottom:0;">Spacious layouts, useful amenities and longer-stay suitability for teams working away from home.</p>
+        </div>
+        <div class="card" style="padding:28px;">
+          <h3>Family Visits</h3>
+          <p style="color:#475569; margin-bottom:0;">Well-equipped spaces that offer privacy, convenience and a more relaxed alternative to standard hotel stays.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section host-band">
+    <div class="container split-grid">
+      <div>
+        <div class="label">Host story</div>
+        <h2>Built with care by a new London accommodation brand</h2>
+        <p class="lead">Simplex Stays was founded by Anton with a clear goal: to provide guests with accommodation that feels modern, reliable and thoughtfully prepared. The business is built around good standards, clear communication and creating spaces that guests feel comfortable returning to.</p>
+      </div>
+
+      <div class="glass">
+        <p>✓ Clear, professional communication</p>
+        <p>✓ Well-prepared spaces for comfortable stays</p>
+        <p>✓ Practical luxury with a corporate-ready finish</p>
+        <p>✓ A growing brand focused on trust and guest experience</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-shell">
+        <div class="contact-grid">
+          <div>
+            <div class="label">Enquiries</div>
+            <h2>Looking for your next London stay?</h2>
+            <p class="lead">Get in touch for corporate stays, relocation bookings, contractor accommodation or longer furnished stays in London. Full check-in and address details are provided after booking confirmation for guest security and privacy.</p>
+          </div>
+
+          <div class="card" style="padding:30px; background:white;">
+            <div style="display:grid; gap:14px; margin-bottom:20px;">
+              <div class="stat"><strong>Business:</strong> Simplex Stays Ltd</div>
+              <div class="stat"><strong>Location:</strong> London</div>
+              <div class="stat"><strong>Area:</strong> Dollis Hill, North West London</div>
+              <div class="stat"><strong>Bookings:</strong> Corporate, relocation, contractor and family stays</div>
+            </div>
+
+            <div class="cta-row" style="margin:0;">
+              <a href="mailto:hello@simplexstays.co.uk" class="btn btn-primary">Email Enquiry</a>
+              <a href="#" class="btn btn-secondary">Add Booking Link</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>© 2026 Simplex Stays Ltd. All rights reserved.</div>
+      <div>Modern furnished accommodation in London for comfortable, flexible stays.</div>
+    </div>
+  </footer>
 </body>
 </html>
